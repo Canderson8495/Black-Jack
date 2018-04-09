@@ -44,7 +44,7 @@ public class Deck {
 		}
 	}
 	
-	public Card getCard() {
+	public Card dealCard() {
 		Card tmp = deck.get(0);
 		deck.remove(0);
 		return tmp;
@@ -60,5 +60,5 @@ public class Deck {
 			deck.set(changed, tmp);
 		}
 	}
-	
+
 }

@@ -2,18 +2,18 @@ package pkg;
 //We need to add a implement playable vs nonplayable- non playable adding the logic.
 public class Player {
 	private boolean bust = false;
-	private int pot;
+	private int money;
 	private Hand hand;
-	//Player has a pot.
+	//Player has a money.
 	//Player can be a NPC or a PC. 
 	//Player can have a hand that can have cards added and removed.
 	//Player can bet
 	public int bet(int bet) {
 		try {
-			if(pot < bet) {
-				throw new Exception("Pot can't go below zero");
+			if(money < bet) {
+				throw new Exception("money can't go below zero");
 			}else {
-				pot -= bet;
+				money -= bet;
 			}
 			return bet;
 		}catch(Exception e) {
@@ -22,6 +22,45 @@ public class Player {
 		}
 	}
 	public void addMoney(int money) {
-		this.pot += money;
+		this.money += money;
+	}
+	
+	
+	//ToDo add logic for a NPC betting and using hit feature.
+	
+	
+	
+	public boolean isBust() {
+		return bust;
+	}
+	public void setBust(boolean bust) {
+		this.bust = bust;
+	}
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	public Hand getHand() {
+		return hand;
+	}
+	public void setHand(Hand hand) {
+		this.hand = hand;
+	}
+	
+	//CONSTRUCTOR
+	public Player(int money, Hand hand) {
+		super();
+		this.money = money;
+		this.hand = hand;
+	}
+	public Player(int money) {
+		super();
+		this.money = money;
+	}
+	public Player() {
+		super();
+		this.money = 1000;
 	}
 }
