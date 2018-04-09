@@ -4,30 +4,47 @@ package pkg;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.*;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.awt.Graphics;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 
 public class BlackJackMain extends Application{
 	@Override
 	public void start(Stage primaryStage) {
+		StackPane pane = new StackPane();
+		HBox hBox = new HBox();
+		VBox vBox = new VBox();
+		hBox.setSpacing(10);
+		hBox.setAlignment(Pos.CENTER);
+		vBox.setAlignment(Pos.BOTTOM_RIGHT);
+		Button hit = new Button("Hit");
+		Button fold = new Button("Fold");
+		Button bet = new Button("Bet");
+		Text money = new Text("MOney");
+	
+		hBox.getChildren().add(bet);
+		hBox.getChildren().add(hit);
+		hBox.getChildren().add(fold);
+		vBox.getChildren().add(money);
+
 		
+		
+		BorderPane borderPane = new BorderPane();
+		borderPane.setCenter(pane);
+		borderPane.setBottom(hBox);
+		borderPane.setRight(vBox);
+		BorderPane.setAlignment(hBox, Pos.CENTER);
+		
+		Scene scene = new Scene(borderPane, 500, 500);
+		primaryStage.setTitle("BlackJack");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+
 		
 	}
 	public static void main(String[] args) {
