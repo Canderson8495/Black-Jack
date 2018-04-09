@@ -16,17 +16,46 @@
 
 package pkg;
 import java.util.ArrayList;
+import java.util.Random;
 public class Deck {
-	ArrayList<Integer> clubs = new ArrayList<Integer>();
-	ArrayList<Integer> spades = new ArrayList<Integer>();
-	ArrayList<Integer> hearts = new ArrayList<Integer>();
-	ArrayList<Integer> diamonds = new ArrayList<Integer>();
+	//Might put these 4 together into a 1-50 type of deck, because it'll be easier that way.
+	private ArrayList<Card> deck = new ArrayList<Card>();
+	
 	public Deck() {
-		for(int x = 1; x <= 13; x++) {
-			clubs.add(x);
-			spades.add(x);
-			hearts.add(x);
-			diamonds.add(x);
+		for(int x = 0; x < 4; x++) {
+			Card tmp = new Card();
+			switch(x) {
+			case 0:
+				tmp.suit = "Diamond";
+				break;
+			case 1:
+				tmp.suit = "Heart";
+				break;
+			case 2:
+				tmp.suit = "Club";
+				break;
+			case 3:
+				tmp.suit = "Spade";
+				break;
+			}
+			for(int s = 1; s <= 13; s++) {
+				deck.add(new Card(tmp.suit, s));
+			}
+		}
+	}
+	
+	public Card getCard() {
+		return deck.get(0);
+	}
+	
+	public void shuffle() {
+		Random rng = new Random();
+		Card tmp;
+		for(int x = 0; x < 100; x++) {
+			tmp = deck.get(0);
+			int changed = rng.nextInt(deck.size());
+			deck.set(0, deck.get(changed));
+			deck.set(changed, tmp);
 		}
 	}
 	
