@@ -11,6 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 
 public class BlackJackMain extends Application{
@@ -19,20 +21,32 @@ public class BlackJackMain extends Application{
 		StackPane pane = new StackPane();
 		HBox hBox = new HBox();
 		VBox vBox = new VBox();
+		Player player = new Player();
+		String pot = Integer.toString(player.getMoney());
 		hBox.setSpacing(10);
 		hBox.setAlignment(Pos.CENTER);
 		vBox.setAlignment(Pos.BOTTOM_RIGHT);
 		Button hit = new Button("Hit");
 		Button fold = new Button("Fold");
 		Button bet = new Button("Bet");
-		Text money = new Text("MOney");
+		Text money = new Text(pot);
 	
+
 		hBox.getChildren().add(bet);
 		hBox.getChildren().add(hit);
 		hBox.getChildren().add(fold);
 		vBox.getChildren().add(money);
 
-		
+		bet.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				player.addMoney(-100);
+				vBox.getChildren().remove(money);
+				money.setText(pot);
+				vBox.getChildren().add(money);
+
+
+			}
+		});
 		
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(pane);
@@ -47,6 +61,7 @@ public class BlackJackMain extends Application{
 
 		
 	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
