@@ -45,7 +45,9 @@ public class Deck {
 	}
 	
 	public Card getCard() {
-		return deck.get(0);
+		Card tmp = deck.get(0);
+		deck.remove(0);
+		return tmp;
 	}
 	
 	public void shuffle() {
