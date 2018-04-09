@@ -26,20 +26,20 @@ public class Deck {
 			Card tmp = new Card();
 			switch(x) {
 			case 0:
-				tmp.suit = "Diamond";
+				tmp.setSuit("Diamond");
 				break;
 			case 1:
-				tmp.suit = "Heart";
+				tmp.setSuit("Heart");
 				break;
 			case 2:
-				tmp.suit = "Club";
+				tmp.setSuit("Club");
 				break;
 			case 3:
-				tmp.suit = "Spade";
+				tmp.setSuit("Spade");
 				break;
 			}
 			for(int s = 1; s <= 13; s++) {
-				deck.add(new Card(tmp.suit, s));
+				deck.add(new Card(tmp.getSuit(), s));
 			}
 		}
 	}
