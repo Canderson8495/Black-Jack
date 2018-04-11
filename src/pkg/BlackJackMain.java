@@ -2,17 +2,23 @@ package pkg;
 
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+
+
+
+
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 
 public class BlackJackMain extends Application{
@@ -23,31 +29,37 @@ public class BlackJackMain extends Application{
 		VBox vBox = new VBox();
 		Player player = new Player();
 		String pot = Integer.toString(player.getMoney());
+
+
 		hBox.setSpacing(10);
 		hBox.setAlignment(Pos.CENTER);
 		vBox.setAlignment(Pos.BOTTOM_RIGHT);
 		Button hit = new Button("Hit");
 		Button fold = new Button("Fold");
 		Button bet = new Button("Bet");
-		Text money = new Text(pot);
-	
-
+		Label money = new Label(pot);
+		money.setMinWidth(50);
+		
+		TextField betAmount = new TextField(); 
+		betAmount.setPromptText("$");
+		betAmount.setPrefColumnCount(3);
 		hBox.getChildren().add(bet);
 		hBox.getChildren().add(hit);
 		hBox.getChildren().add(fold);
 		vBox.getChildren().add(money);
+		vBox.getChildren().add(betAmount);
 
 		bet.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent event) {
-				player.addMoney(-100);
-				vBox.getChildren().remove(money);
-				money.setText(pot);
-				vBox.getChildren().add(money);
-
+			@Override
+			public void handle(ActionEvent e) {
+				player.bet(Integer.parseInt(betAmount.getText()));
+				money.setText(Integer.toString(player.getMoney()));
 
 			}
+			
 		});
-		
+
+
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(pane);
 		borderPane.setBottom(hBox);
