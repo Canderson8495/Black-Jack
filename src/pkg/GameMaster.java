@@ -5,7 +5,14 @@ public class GameMaster {
 	public static int ante = 25;
 	//I need to make this accessible to the BlackJack Main class. That can be either through making it public or adding some get functions.
 	public Player[] players = new Player[4]; 
-	private Deck deck = new Deck();
+	//implement encapsulation for this if there is time.
+	public Deck deck = new Deck();
+	public int getRunningBet() {
+		return runningBet;
+	}
+	public void setRunningBet(int runningBet) {
+		this.runningBet = runningBet;
+	}
 	private int pot;
 	int runningBet;
 	public GameMaster() {
@@ -14,6 +21,22 @@ public class GameMaster {
 		for(int x = 0; x < players.length; x++) {
 			players[x] = new Player();
 		}
+	}
+	//CalculateWin will return the player who won, it will automatically give pot to winner.
+	public int calculateWin() {
+		int currentWinner = -1;
+		int max = 0;
+		for(int x = 0; x < players.length; x++) {
+			if(players[x].isBust() == false && players[x].getHand().getSum() > max) {
+				max = players[x].getHand().getSum();
+				currentWinner = x;
+			}
+		}
+		//Giving pot to Winner
+		players[currentWinner].addMoney(pot);
+		//resetting pot;
+		pot = 0;
+		return currentWinner;
 	}
 	public void play() {
 		Random rng = new Random();

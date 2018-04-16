@@ -28,10 +28,8 @@ public class BlackJackMain extends Application{
 		HBox hBox = new HBox();
 		VBox vBox = new VBox();
 		Player player = new Player();
-		String playerMoney = Integer.toString(player.getMoney());
+		String pot = Integer.toString(player.getMoney());
 		GameMaster gm = new GameMaster();
-		String gmPot = Integer.toString(gm.getPot());
-		
 
 
 		hBox.setSpacing(10);
@@ -39,9 +37,9 @@ public class BlackJackMain extends Application{
 		vBox.setAlignment(Pos.BOTTOM_RIGHT);
 		Button hit = new Button("Hit");
 		Button fold = new Button("Fold");
+		Button hold = new Button("Hold");
 		Button bet = new Button("Bet");
-		Label money = new Label(playerMoney);
-		Label pot = new Label(gmPot);
+		Label money = new Label(pot);
 		money.setMinWidth(50);
 		
 		TextField betAmount = new TextField(); 
@@ -49,29 +47,52 @@ public class BlackJackMain extends Application{
 		betAmount.setPrefColumnCount(3);
 		hBox.getChildren().add(bet);
 		hBox.getChildren().add(hit);
+		hBox.getChildren().add(hold);
 		hBox.getChildren().add(fold);
 		vBox.getChildren().add(money);
 		vBox.getChildren().add(betAmount);
-		pane.getChildren().add(pot);
 
 		bet.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				gm.addPot(player.bet(Integer.parseInt(betAmount.getText())));
 				money.setText(Integer.toString(player.getMoney()));
-<<<<<<< HEAD
 				//Gm.play() will then process through the AI's turns.
-				gm.play();
-=======
-				pot.setText(Integer.toString(gm.getPot()));
->>>>>>> 42bbfc5597de9ff9055c7c2c9d467734e1224394
+
 
 			}
 		});
-		bet.setOnAction(new EventHandler<ActionEvent>() {
+		fold.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				
+				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
+				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
 				gm.players[0].setBust(true);
+				//Gm.play() will then process through the AI's turns.
+				gm.play();
+
+			}
+		});
+		hold.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
+				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
+				gm.players[0].setHold(true);
+				//Gm.play() will then process through the AI's turns.
+				gm.play();
+
+			}
+		});
+		hit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				
+				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
+				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
+				gm.players[0].addCard(gm.deck.dealCard());
 				//Gm.play() will then process through the AI's turns.
 				gm.play();
 
