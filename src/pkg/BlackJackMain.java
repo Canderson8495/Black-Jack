@@ -95,6 +95,10 @@ public class BlackJackMain extends Application{
 				gm.players[0].setBust(true);
 				//Gm.play() will then process through the AI's turns.
 				gm.play();
+				p1.setText("Player 1: " + Integer.toString(gm.players[0].getHand().getSum()));
+				p2.setText("Player 2: " + Integer.toString(gm.players[1].getHand().getSum()));
+				p3.setText("Player 3: " + Integer.toString(gm.players[2].getHand().getSum()));
+				p4.setText("Player 4: " + Integer.toString(gm.players[3].getHand().getSum()));
 
 			}
 		});
@@ -107,6 +111,10 @@ public class BlackJackMain extends Application{
 				gm.players[0].setHold(true);
 				//Gm.play() will then process through the AI's turns.
 				gm.play();
+				p1.setText("Player 1: " + Integer.toString(gm.players[0].getHand().getSum()));
+				p2.setText("Player 2: " + Integer.toString(gm.players[1].getHand().getSum()));
+				p3.setText("Player 3: " + Integer.toString(gm.players[2].getHand().getSum()));
+				p4.setText("Player 4: " + Integer.toString(gm.players[3].getHand().getSum()));
 
 			}
 		});
@@ -120,6 +128,11 @@ public class BlackJackMain extends Application{
 				System.out.println("The sum of player is " + gm.players[0].getHand().getSum());
 				//Gm.play() will then process through the AI's turns.
 				gm.play();
+				p1.setText("Player 1: " + Integer.toString(gm.players[0].getHand().getSum()));
+				p2.setText("Player 2: " + Integer.toString(gm.players[1].getHand().getSum()));
+				p3.setText("Player 3: " + Integer.toString(gm.players[2].getHand().getSum()));
+				p4.setText("Player 4: " + Integer.toString(gm.players[3].getHand().getSum()));
+
 
 			}
 		});
