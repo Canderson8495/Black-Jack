@@ -1,8 +1,32 @@
 
 package pkg;
 import java.util.*;
-import javafx.beans.property.IntegerProperty;
+import java.util.concurrent.TimeUnit;
+
+import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 public class GameMaster {
+	//IntegerProperty
+	
+	public StringProperty P1SumProperty() {
+		StringProperty p1Sum = new SimpleStringProperty(Integer.toString(players[0].getHand().getSum()));
+		return p1Sum;
+	}
+	public StringProperty P2SumProperty() {
+		StringProperty p2Sum = new SimpleStringProperty(Integer.toString(players[1].getHand().getSum()));
+		return p2Sum;
+	}
+	public StringProperty P3SumProperty() {
+		StringProperty p3Sum = new SimpleStringProperty(Integer.toString(players[2].getHand().getSum()));
+		return p3Sum;
+	}
+	public StringProperty P4SumProperty() {
+		StringProperty p4Sum = new SimpleStringProperty(Integer.toString(players[3].getHand().getSum()));
+		return p4Sum;
+	}
+	
+	
+	
 	public static int ante = 25;
 	//I need to make this accessible to the BlackJack Main class. That can be either through making it public or adding some get functions.
 	public Player[] players = new Player[4]; 
@@ -37,15 +61,23 @@ public class GameMaster {
 		players[currentWinner].addMoney(pot);
 		//resetting pot;
 		pot = 0;
+		newRound();
+		System.out.println(currentWinner);
 		return currentWinner;
 	}
 	public void play() {
 		Random rng = new Random();
 		for(int x = 1; x < players.length;x++) {
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			System.out.println("Player " + x + " " +players[x].getHand().getSum());
 			if(players[x].isHold() || players[x].isBust()) {
 			}else {
-				if(players[x].getHand().getSum()<17 && rng.nextInt()%2==0) {
+				if(players[x].getHand().getSum()<17 && rng.nextInt()%5!=0) {
 					players[x].addCard(deck.dealCard());
 					System.out.println("Dealing player " + x);
 					
@@ -59,6 +91,7 @@ public class GameMaster {
 			}
 		}
 		runningBet = 0;
+		checkEnd();
 	}
 	public void newRound() {
 		//Shuffles
@@ -66,6 +99,8 @@ public class GameMaster {
 		//Takes card from top and places into players hand
 		for(int x = 0; x < players.length; x++) {
 			//Probable cause of bug if hand of player is not passed directly to this class for immediate adjustments like javafx.getChildren.add();
+			deck = new Deck();
+			players[x].setHand(new Hand());
 			players[x].getHand().addCard(deck.dealCard());
 			players[x].getHand().addCard(deck.dealCard());
 			players[x].setHold(false);
@@ -82,14 +117,18 @@ public class GameMaster {
 	public void setPot(int money) {
 		pot = money;
 	}
-	public boolean checkEnd() {
+	public void checkEnd() {
+		boolean end = true;
 		for(int x = 0; x < players.length; x++) {
 			if(players[x].isBust() || players[x].isHold()) {
-				continue;
 			}else {
-				return false;
+				end = false;
+				break;
 			}
 		}
-		return true;
+		if(end) {
+			calculateWin();
+		}
 	}
 }
+
