@@ -1,6 +1,7 @@
 
 package pkg;
 import java.util.*;
+import javafx.beans.property.IntegerProperty;
 public class GameMaster {
 	public static int ante = 25;
 	//I need to make this accessible to the BlackJack Main class. That can be either through making it public or adding some get functions.
@@ -43,11 +44,14 @@ public class GameMaster {
 		for(int x = 1; x < players.length;x++) {
 			System.out.println("Player " + x + " " +players[x].getHand().getSum());
 			if(players[x].isHold() || players[x].isBust()) {
-				if(players[x].getHand().getSum()>17 && rng.nextInt()%2==0) {
+			}else {
+				if(players[x].getHand().getSum()<17 && rng.nextInt()%2==0) {
 					players[x].addCard(deck.dealCard());
+					System.out.println("Dealing player " + x);
 					
 				}else {
 					players[x].setHold(true);
+					System.out.println("Player " + x + " is holding");
 				}
 				if(runningBet > 0) {
 					players[x].bet(runningBet);
