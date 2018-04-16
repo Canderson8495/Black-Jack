@@ -2,6 +2,7 @@ package pkg;
 //We need to add a implement playable vs nonplayable- non playable adding the logic.
 public class Player {
 	private boolean bust = false;
+	private boolean hold = false;
 	private int money;
 	private Hand hand;
 	//Player has a money.
@@ -20,6 +21,12 @@ public class Player {
 			System.out.println(e);
 			return -1;
 		}
+	}
+	public boolean isHold() {
+		return hold;
+	}
+	public void setHold(boolean hold) {
+		this.hold = hold;
 	}
 	public void addMoney(int money) {
 		this.money += money;

@@ -1,10 +1,13 @@
+
 package pkg;
+import java.util.*;
 public class GameMaster {
 	public static int ante = 25;
 	//I need to make this accessible to the BlackJack Main class. That can be either through making it public or adding some get functions.
 	public Player[] players = new Player[4]; 
 	private Deck deck = new Deck();
 	private int pot;
+	int runningBet;
 	public GameMaster() {
 		//This for loop initialized all players in "players" array with the no arg constructor of Player Class.
 		//The no arg constructor of Player Class intializes the player object with 1000 units of money
@@ -13,8 +16,20 @@ public class GameMaster {
 		}
 	}
 	public void play() {
-		//Postponed until UI.
-		//Logic for going through one round of turns.
+		Random rng = new Random();
+		for(int x = 1; x < players.length;x++) {
+			if(players[x].isHold() || players[x].isBust()) {
+				if(players[x].getHand().getSum()>17 && rng.nextInt()%2==0) {
+					players[x].addCard(deck.dealCard());
+				}else {
+					players[x].setHold(true);
+				}
+				if(runningBet > 0) {
+					players[x].bet(runningBet);
+				}
+			}
+		}
+		runningBet = 0;
 	}
 	public void newRound() {
 		//Shuffles

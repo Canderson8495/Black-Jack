@@ -55,10 +55,21 @@ public class BlackJackMain extends Application{
 			public void handle(ActionEvent e) {
 				gm.addPot(player.bet(Integer.parseInt(betAmount.getText())));
 				money.setText(Integer.toString(player.getMoney()));
+				//Gm.play() will then process through the AI's turns.
+				gm.play();
 
 			}
-			
 		});
+		bet.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				gm.players[0].setBust(true);
+				//Gm.play() will then process through the AI's turns.
+				gm.play();
+
+			}
+		});
+		
 
 
 		BorderPane borderPane = new BorderPane();
