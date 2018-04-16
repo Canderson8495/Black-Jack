@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ContentDisplay;
 
 
 
@@ -25,6 +26,8 @@ public class BlackJackMain extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		StackPane pane = new StackPane();
+		BorderPane playerPane = new BorderPane();
+		
 		HBox hBox = new HBox();
 		VBox vBox = new VBox();
 		Player player = new Player();
@@ -33,6 +36,11 @@ public class BlackJackMain extends Application{
 		gm.newRound();
 		String gmPot = Integer.toString(gm.getPot());
 		System.out.println(gm.deck.dealCard());
+		
+		String player1 = Integer.toString(gm.players[0].getHand().getSum());
+		String player2 = Integer.toString(gm.players[1].getHand().getSum());
+		String player3 = Integer.toString(gm.players[2].getHand().getSum());
+		String player4 = Integer.toString(gm.players[3].getHand().getSum());
 
 		hBox.setSpacing(10);
 		hBox.setAlignment(Pos.CENTER);
@@ -43,6 +51,16 @@ public class BlackJackMain extends Application{
 		Button bet = new Button("Bet");
 		Label money = new Label(playerMoney);
 		Label pot = new Label(gmPot);
+		Label p1 = new Label("Player 1: " + player1);
+		Label p2 = new Label("Player 2: " + player2);
+		Label p3 = new Label("Player 3: " + player3);
+		Label p4 = new Label("Player 4: " + player4);
+		p1.setTranslateY(100);
+		p2.setTranslateX(100);
+		p3.setTranslateY(-100);
+		p4.setTranslateX(-100);
+
+
 		money.setMinWidth(50);
 		
 		TextField betAmount = new TextField(); 
@@ -55,6 +73,7 @@ public class BlackJackMain extends Application{
 		vBox.getChildren().add(money);
 		vBox.getChildren().add(betAmount);
 		pane.getChildren().add(pot);
+		pane.getChildren().addAll(p1,p2,p3,p4);
 
 		bet.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
