@@ -28,8 +28,10 @@ public class BlackJackMain extends Application{
 		HBox hBox = new HBox();
 		VBox vBox = new VBox();
 		Player player = new Player();
-		String pot = Integer.toString(player.getMoney());
+		String playerMoney = Integer.toString(player.getMoney());
 		GameMaster gm = new GameMaster();
+		String gmPot = Integer.toString(gm.getPot());
+		
 
 
 		hBox.setSpacing(10);
@@ -38,7 +40,8 @@ public class BlackJackMain extends Application{
 		Button hit = new Button("Hit");
 		Button fold = new Button("Fold");
 		Button bet = new Button("Bet");
-		Label money = new Label(pot);
+		Label money = new Label(playerMoney);
+		Label pot = new Label(gmPot);
 		money.setMinWidth(50);
 		
 		TextField betAmount = new TextField(); 
@@ -49,14 +52,19 @@ public class BlackJackMain extends Application{
 		hBox.getChildren().add(fold);
 		vBox.getChildren().add(money);
 		vBox.getChildren().add(betAmount);
+		pane.getChildren().add(pot);
 
 		bet.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				gm.addPot(player.bet(Integer.parseInt(betAmount.getText())));
 				money.setText(Integer.toString(player.getMoney()));
+<<<<<<< HEAD
 				//Gm.play() will then process through the AI's turns.
 				gm.play();
+=======
+				pot.setText(Integer.toString(gm.getPot()));
+>>>>>>> 42bbfc5597de9ff9055c7c2c9d467734e1224394
 
 			}
 		});
