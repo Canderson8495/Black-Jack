@@ -28,35 +28,47 @@ public class Hand {
 		hand.add(card);
 		//Constantly adds the new Card to a running sum;
 		//TODO: Add compatiblity for Ace, and face cards.
-		addSum(card.getValue());
 	
 		switch(card.getValue()) {
 		case 1: 
 			sum += 1;
+			break;
 		case 2: 
 			sum += 2;
+			break;
 		case 3:
 			sum += 3;
+			break;
 		case 4:
 			sum += 4;
+			break;
 		case 5:
 			sum += 5;
+			break;
 		case 6:
 			sum += 6;
+			break;
 		case 7:
 			sum += 7;
+			break;
 		case 8:
 			sum += 8;
+			break;
 		case 9:
 			sum += 9;
+			break;
 		case 10:
 			sum += 10;
+			break;
 		case 11:
-			sum += 11;
+			sum += 10;
+			break;
 		case 12:
-			sum += 12;
+			sum += 10;
+			break;
 		case 13:
-			sum += 13;
+			sum += 10;
+			break;
 
 
 		}

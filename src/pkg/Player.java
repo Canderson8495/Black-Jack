@@ -4,7 +4,7 @@ public class Player {
 	private boolean bust = false;
 	private boolean hold = false;
 	private int money;
-	private Hand hand;
+	private Hand hand = new Hand();
 	//Player has a money.
 	//Player can be a NPC or a PC. 
 	//Player can have a hand that can have cards added and removed.
@@ -19,7 +19,7 @@ public class Player {
 			return bet;
 		}catch(Exception e) {
 			System.out.println(e);
-			return -1;
+			return 0;
 		}
 	}
 	public boolean isHold() {
@@ -58,6 +58,7 @@ public class Player {
 	
 	public void addCard(Card card) {
 		hand.addCard(card);
+		System.out.println("WE GOT A CARD");
 		if(hand.getSum()> 21) {
 			System.out.println("Bust");
 			bust = true;

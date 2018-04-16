@@ -41,9 +41,11 @@ public class GameMaster {
 	public void play() {
 		Random rng = new Random();
 		for(int x = 1; x < players.length;x++) {
+			System.out.println("Player " + x + " " +players[x].getHand().getSum());
 			if(players[x].isHold() || players[x].isBust()) {
 				if(players[x].getHand().getSum()>17 && rng.nextInt()%2==0) {
 					players[x].addCard(deck.dealCard());
+					
 				}else {
 					players[x].setHold(true);
 				}
@@ -62,6 +64,8 @@ public class GameMaster {
 			//Probable cause of bug if hand of player is not passed directly to this class for immediate adjustments like javafx.getChildren.add();
 			players[x].getHand().addCard(deck.dealCard());
 			players[x].getHand().addCard(deck.dealCard());
+			players[x].setHold(false);
+			players[x].setBust(false);
 			players[x].bet(ante);
 		}
 	}

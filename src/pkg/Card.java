@@ -26,4 +26,8 @@ public class Card {
 		//Return a card image with designated suit.
 		return new ImageView();
 	}
+	@Override
+	public String toString() {
+		return "Card [value=" + value + ", suit=" + suit + "]";
+	}
 }

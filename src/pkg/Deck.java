@@ -42,6 +42,7 @@ public class Deck {
 				deck.add(new Card(tmp.getSuit(), s));
 			}
 		}
+		shuffle();
 	}
 	
 	public Card dealCard() {

@@ -30,8 +30,9 @@ public class BlackJackMain extends Application{
 		Player player = new Player();
 		String playerMoney = Integer.toString(player.getMoney());
 		GameMaster gm = new GameMaster();
+		gm.newRound();
 		String gmPot = Integer.toString(gm.getPot());
-
+		System.out.println(gm.deck.dealCard());
 
 		hBox.setSpacing(10);
 		hBox.setAlignment(Pos.CENTER);
@@ -97,6 +98,7 @@ public class BlackJackMain extends Application{
 				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
 				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
 				gm.players[0].addCard(gm.deck.dealCard());
+				System.out.println("The sum of player is " + gm.players[0].getHand().getSum());
 				//Gm.play() will then process through the AI's turns.
 				gm.play();
 
