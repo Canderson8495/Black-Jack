@@ -4,6 +4,7 @@ public class GameMaster {
 	//I need to make this accessible to the BlackJack Main class. That can be either through making it public or adding some get functions.
 	public Player[] players = new Player[4]; 
 	private Deck deck = new Deck();
+	private int pot;
 	public GameMaster() {
 		//This for loop initialized all players in "players" array with the no arg constructor of Player Class.
 		//The no arg constructor of Player Class intializes the player object with 1000 units of money
@@ -25,5 +26,14 @@ public class GameMaster {
 			players[x].getHand().addCard(deck.dealCard());
 			players[x].bet(ante);
 		}
+	}
+	public int getPot() {
+		return pot;
+	}
+	public void addPot(int money) {
+		pot += money;
+	}
+	public void setPot(int money) {
+		pot = money;
 	}
 }

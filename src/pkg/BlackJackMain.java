@@ -29,6 +29,7 @@ public class BlackJackMain extends Application{
 		VBox vBox = new VBox();
 		Player player = new Player();
 		String pot = Integer.toString(player.getMoney());
+		GameMaster gm = new GameMaster();
 
 
 		hBox.setSpacing(10);
@@ -52,7 +53,7 @@ public class BlackJackMain extends Application{
 		bet.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				player.bet(Integer.parseInt(betAmount.getText()));
+				gm.addPot(player.bet(Integer.parseInt(betAmount.getText())));
 				money.setText(Integer.toString(player.getMoney()));
 
 			}

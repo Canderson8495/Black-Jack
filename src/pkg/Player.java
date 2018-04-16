@@ -49,6 +49,14 @@ public class Player {
 		this.hand = hand;
 	}
 	
+	public void addCard(Card card) {
+		hand.addCard(card);
+		if(hand.getSum()> 21) {
+			System.out.println("Bust");
+			bust = true;
+		}
+	}
+	
 	//CONSTRUCTOR
 	public Player(int money, Hand hand) {
 		super();
