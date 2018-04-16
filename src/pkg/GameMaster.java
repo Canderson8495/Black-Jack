@@ -74,4 +74,14 @@ public class GameMaster {
 	public void setPot(int money) {
 		pot = money;
 	}
+	public boolean checkEnd() {
+		for(int x = 0; x < players.length; x++) {
+			if(players[x].isBust() || players[x].isHold()) {
+				continue;
+			}else {
+				return false;
+			}
+		}
+		return true;
+	}
 }
