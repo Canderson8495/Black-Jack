@@ -8,24 +8,6 @@ import javafx.beans.property.SimpleStringProperty;
 public class GameMaster {
 	//IntegerProperty
 	
-	public StringProperty P1SumProperty() {
-		StringProperty p1Sum = new SimpleStringProperty(Integer.toString(players[0].getHand().getSum()));
-		return p1Sum;
-	}
-	public StringProperty P2SumProperty() {
-		StringProperty p2Sum = new SimpleStringProperty(Integer.toString(players[1].getHand().getSum()));
-		return p2Sum;
-	}
-	public StringProperty P3SumProperty() {
-		StringProperty p3Sum = new SimpleStringProperty(Integer.toString(players[2].getHand().getSum()));
-		return p3Sum;
-	}
-	public StringProperty P4SumProperty() {
-		StringProperty p4Sum = new SimpleStringProperty(Integer.toString(players[3].getHand().getSum()));
-		return p4Sum;
-	}
-	
-	
 	
 	public static int ante = 25;
 	//I need to make this accessible to the BlackJack Main class. That can be either through making it public or adding some get functions.
@@ -68,12 +50,12 @@ public class GameMaster {
 	public void play() {
 		Random rng = new Random();
 		for(int x = 1; x < players.length;x++) {
-			try {
-				TimeUnit.SECONDS.sleep(1);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				TimeUnit.SECONDS.sleep(1);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			System.out.println("Player " + x + " " +players[x].getHand().getSum());
 			if(players[x].isHold() || players[x].isBust()) {
 			}else {
@@ -127,6 +109,7 @@ public class GameMaster {
 			}
 		}
 		if(end) {
+			System.out.println("ROUND OVER!!!!!!!!!!!!!!!!!!!");
 			calculateWin();
 		}
 	}

@@ -1,4 +1,8 @@
 package pkg;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 //We need to add a implement playable vs nonplayable- non playable adding the logic.
 public class Player {
 	private boolean bust = false;
@@ -9,6 +13,10 @@ public class Player {
 	//Player can be a NPC or a PC. 
 	//Player can have a hand that can have cards added and removed.
 	//Player can bet
+	public StringProperty SumProperty() {
+		StringProperty p1Sum = new SimpleStringProperty(Integer.toString(getHand().getSum()));
+		return p1Sum;
+	}
 	public int bet(int bet) {
 		try {
 			if(money < bet) {
