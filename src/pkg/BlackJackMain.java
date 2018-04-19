@@ -26,44 +26,45 @@ import java.util.*;
 
 public class BlackJackMain extends Application{
 	GameMaster gm = new GameMaster();
+	Group hand1 = new Group();
+	Group hand2 = new Group();
+	Group hand3 = new Group();
+	Group hand4 = new Group();
+	StackPane pane = new StackPane();
+	BorderPane playerPane = new BorderPane();
+	
 	@Override
 	public void start(Stage primaryStage) {
-		StackPane pane = new StackPane();
-		BorderPane playerPane = new BorderPane();
-		
-		HBox hBox = new HBox();
-		VBox vBox = new VBox();
-		Player player = new Player();
-		String playerMoney = Integer.toString(player.getMoney());
 		
 		gm.newRound();
+		HBox controls = new HBox();
+		VBox vBox = new VBox();
 		String gmPot = Integer.toString(gm.getPot());
 		System.out.println(gm.deck.dealCard());
 		
-		String player1 = Integer.toString(gm.players[0].getHand().getSum());
-		String player2 = Integer.toString(gm.players[1].getHand().getSum());
-		String player3 = Integer.toString(gm.players[2].getHand().getSum());
-		String player4 = Integer.toString(gm.players[3].getHand().getSum());
 
-		hBox.setSpacing(10);
-		hBox.setAlignment(Pos.CENTER);
+		controls.setSpacing(10);
+		controls.setAlignment(Pos.CENTER);
 		vBox.setAlignment(Pos.BOTTOM_RIGHT);
 		Button hit = new Button("Hit");
 		Button fold = new Button("Fold");
 		Button hold = new Button("Hold");
 		Button bet = new Button("Bet");
-		Label money = new Label(playerMoney);
+		Label money = new Label(Integer.toString(gm.players[0].getMoney()));
 		Label pot = new Label(gmPot);
-		Label p1 = new Label("Player 1: " + player1);
-	
-		
-		Label p2 = new Label("Player 2: " + player2);
-		Label p3 = new Label("Player 3: " + player3);
-		Label p4 = new Label("Player 4: " + player4);
+
+		Label p1 = new Label("Player 1: " + gm.players[0].getHand().getSum());
+		Label p2 = new Label("Player 2: " + gm.players[1].getHand().getSum());
+		Label p3 = new Label("Player 3: " + gm.players[2].getHand().getSum());
+		Label p4 = new Label("Player 4: " + gm.players[3].getHand().getSum());
 		p1.setTranslateY(100);
 		p2.setTranslateX(100);
 		p3.setTranslateY(-100);
 		p4.setTranslateX(-100);
+		hand1 = gm.players[0].getHand().getHandImage();
+		hand2 = gm.players[1].getHand().getHandImage();
+		hand3 = gm.players[2].getHand().getHandImage();
+		hand4 = gm.players[3].getHand().getHandImage();
 
 
 		money.setMinWidth(50);
@@ -71,20 +72,40 @@ public class BlackJackMain extends Application{
 		TextField betAmount = new TextField(); 
 		betAmount.setPromptText("$");
 		betAmount.setPrefColumnCount(3);
-		hBox.getChildren().add(bet);
-		hBox.getChildren().add(hit);
-		hBox.getChildren().add(hold);
-		hBox.getChildren().add(fold);
+		controls.getChildren().add(bet);
+		controls.getChildren().add(hit);
+		controls.getChildren().add(hold);
+		controls.getChildren().add(fold);
 		vBox.getChildren().add(money);
 		vBox.getChildren().add(betAmount);
 		pane.getChildren().add(pot);
-		pane.getChildren().addAll(p1,p2,p3,p4);
+		pane.getChildren().addAll(p1,p2,p3,p4,hand1,hand2,hand3,hand4);
+		hand1.setTranslateY(300);
+		hand2.setTranslateX(300);
+		hand3.setTranslateY(-300);
+		hand4.setTranslateX(-300);
+		
 
+
+		BorderPane borderPane = new BorderPane();
+		borderPane.setCenter(pane);
+		borderPane.setBottom(controls);
+		borderPane.setRight(vBox);
+		BorderPane.setAlignment(controls, Pos.CENTER);
+		
+		Scene scene = new Scene(borderPane, 500, 500);
+		primaryStage.setTitle("BlackJack");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+		
+		//Button Actions
+		
 		bet.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				gm.addPot(player.bet(Integer.parseInt(betAmount.getText())));
-				money.setText(Integer.toString(player.getMoney()));
+				gm.addPot(gm.players[0].bet(Integer.parseInt(betAmount.getText())));
+				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				//Gm.play() will then process through the AI's turns.
 
@@ -99,25 +120,9 @@ public class BlackJackMain extends Application{
 				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
 				gm.players[0].setBust(true);
 				//Gm.play() will then process through the AI's turns.
-				money.setText(Integer.toString(player.getMoney()));
+				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				try {
-					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
-					System.out.println("YOLO");
-					gm.play(1);
-					Thread.sleep(1000);
-					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
-					gm.play(2);
-					Thread.sleep(1000);
-					p3.setText("Player 1: " + gm.players[2].getHand().getSum());
-					gm.play(3);
-					Thread.sleep(1000);
-					p4.setText("Player 1: " + gm.players[3].getHand().getSum());
-					gm.checkEnd();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				playAI();
 
 			}
 		});
@@ -129,25 +134,9 @@ public class BlackJackMain extends Application{
 				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
 				gm.players[0].setHold(true);
 				//Gm.play() will then process through the AI's turns.
-				money.setText(Integer.toString(player.getMoney()));
+				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				try {
-					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
-					System.out.println("YOLO");
-					gm.play(1);
-					Thread.sleep(1000);
-					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
-					gm.play(2);
-					Thread.sleep(1000);
-					p3.setText("Player 1: " + gm.players[2].getHand().getSum());
-					gm.play(3);
-					Thread.sleep(1000);
-					p4.setText("Player 1: " + gm.players[3].getHand().getSum());
-					gm.checkEnd();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				playAI();
 
 			}
 		});
@@ -160,41 +149,31 @@ public class BlackJackMain extends Application{
 				gm.players[0].addCard(gm.deck.dealCard());
 				System.out.println("The sum of player is " + gm.players[0].getHand().getSum());
 				//Gm.play() will then process through the AI's turns.
-				money.setText(Integer.toString(player.getMoney()));
+				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				try {
-					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
-					gm.play(1);
-					Thread.sleep(1000);
-					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
-					gm.play(2);
-					Thread.sleep(1000);
-					p3.setText("Player 1: " + gm.players[2].getHand().getSum());
-					gm.play(3);
-					Thread.sleep(1000);
-					p4.setText("Player 1: " + gm.players[3].getHand().getSum());
-					gm.checkEnd();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				playAI();
 			}
 		});
-		
-
-
-		BorderPane borderPane = new BorderPane();
-		borderPane.setCenter(pane);
-		borderPane.setBottom(hBox);
-		borderPane.setRight(vBox);
-		BorderPane.setAlignment(hBox, Pos.CENTER);
-		
-		Scene scene = new Scene(borderPane, 500, 500);
-		primaryStage.setTitle("BlackJack");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 
 		
+	}
+	public void playAI() {
+		try {
+			hand1 = gm.players[0].getHand().getHandImage();
+			gm.play(1);
+			Thread.sleep(1000);
+			hand2 = gm.players[1].getHand().getHandImage();
+			gm.play(2);
+			Thread.sleep(1000);
+			hand3 = gm.players[2].getHand().getHandImage();
+			gm.play(3);
+			Thread.sleep(1000);
+			hand4 = gm.players[3].getHand().getHandImage();
+			gm.checkEnd();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}	
 	}
 	
 	public static void main(String[] args) {
