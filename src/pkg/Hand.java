@@ -2,6 +2,9 @@ package pkg;
 
 import java.util.ArrayList;
 
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+
 /*
  * SWITCH STATEMENTS CASES
  * 1 - Ace
@@ -88,5 +91,21 @@ public class Hand {
 	}
 	private void addSum(int sum) {
 		this.sum += sum;
+	}
+	public Card getCard(int index) {
+		return hand.get(0);
+	}
+	public ArrayList<Card> getCards() {
+		return hand;
+		
+	}
+	public Group getHandImage() {
+		Group handGroup = new Group();
+		for(int x = 0; x < hand.size(); x++) {
+			ImageView iv = hand.get(x).getCardImage();
+			iv.setX(x*50);
+			handGroup.getChildren().add(iv);
+		}
+		return handGroup;
 	}
 }

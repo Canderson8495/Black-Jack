@@ -5,9 +5,11 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -23,6 +25,7 @@ import javafx.stage.Stage;
 import java.util.*;
 
 public class BlackJackMain extends Application{
+	GameMaster gm = new GameMaster();
 	@Override
 	public void start(Stage primaryStage) {
 		StackPane pane = new StackPane();
@@ -32,7 +35,7 @@ public class BlackJackMain extends Application{
 		VBox vBox = new VBox();
 		Player player = new Player();
 		String playerMoney = Integer.toString(player.getMoney());
-		GameMaster gm = new GameMaster();
+		
 		gm.newRound();
 		String gmPot = Integer.toString(gm.getPot());
 		System.out.println(gm.deck.dealCard());
@@ -161,7 +164,6 @@ public class BlackJackMain extends Application{
 				pot.setText(Integer.toString(gm.getPot()));
 				try {
 					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
-					System.out.println("YOLO");
 					gm.play(1);
 					Thread.sleep(1000);
 					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
@@ -176,9 +178,6 @@ public class BlackJackMain extends Application{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-//Percent concentration and molarity.
-//ThermoChem porbl
-
 			}
 		});
 		

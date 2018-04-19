@@ -1,4 +1,7 @@
 package pkg;
+import java.io.File;
+
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 //This is essentially just a struct with a constructor
@@ -23,11 +26,10 @@ public class Card {
 		this.value = value;
 	}
 	public ImageView getCardImage() {
-		switch(value) {
-		case 1:
-			return new ImageView(new Image(new File()));
-		}
-		return new ImageView();
+		File file = new File("C:\\Code\\Java\\Black-Jack\\src\\images\\"+suit.charAt(0)+value+".png");
+		Image image = new Image(file.toURI().toString());
+		ImageView iv = new ImageView(image);
+		return iv;
 	}
 	@Override
 	public String toString() {
