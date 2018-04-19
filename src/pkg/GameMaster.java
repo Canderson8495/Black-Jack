@@ -47,15 +47,9 @@ public class GameMaster {
 		System.out.println(currentWinner);
 		return currentWinner;
 	}
-	public void play() {
+	public void play(int x) {
 		Random rng = new Random();
-		for(int x = 1; x < players.length;x++) {
-//			try {
-//				TimeUnit.SECONDS.sleep(1);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+		//for(int x = 1; x < players.length;x++) {
 			System.out.println("Player " + x + " " +players[x].getHand().getSum());
 			if(players[x].isHold() || players[x].isBust()) {
 			}else {
@@ -71,9 +65,8 @@ public class GameMaster {
 					players[x].bet(runningBet);
 				}
 			}
-		}
+		//}
 		runningBet = 0;
-		checkEnd();
 	}
 	public void newRound() {
 		//Shuffles

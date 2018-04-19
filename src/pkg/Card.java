@@ -23,7 +23,10 @@ public class Card {
 		this.value = value;
 	}
 	public ImageView getCardImage() {
-		//Return a card image with designated suit.
+		switch(value) {
+		case 1:
+			return new ImageView(new Image(new File()));
+		}
 		return new ImageView();
 	}
 	@Override

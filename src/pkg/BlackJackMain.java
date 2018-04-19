@@ -20,7 +20,7 @@ import javafx.scene.control.ContentDisplay;
 
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import java.util.*;
 
 public class BlackJackMain extends Application{
 	@Override
@@ -96,13 +96,25 @@ public class BlackJackMain extends Application{
 				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
 				gm.players[0].setBust(true);
 				//Gm.play() will then process through the AI's turns.
-				gm.play();
 				money.setText(Integer.toString(player.getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				p1.textProperty().bind(gm.players[0].SumProperty());
-				p2.textProperty().bind(gm.players[1].SumProperty());
-				p3.textProperty().bind(gm.players[2].SumProperty());
-				p4.textProperty().bind(gm.players[3].SumProperty());
+				try {
+					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
+					System.out.println("YOLO");
+					gm.play(1);
+					Thread.sleep(1000);
+					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
+					gm.play(2);
+					Thread.sleep(1000);
+					p3.setText("Player 1: " + gm.players[2].getHand().getSum());
+					gm.play(3);
+					Thread.sleep(1000);
+					p4.setText("Player 1: " + gm.players[3].getHand().getSum());
+					gm.checkEnd();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -114,13 +126,25 @@ public class BlackJackMain extends Application{
 				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
 				gm.players[0].setHold(true);
 				//Gm.play() will then process through the AI's turns.
-				gm.play();
 				money.setText(Integer.toString(player.getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				p1.textProperty().bind(gm.players[0].SumProperty());
-				p2.textProperty().bind(gm.players[1].SumProperty());
-				p3.textProperty().bind(gm.players[2].SumProperty());
-				p4.textProperty().bind(gm.players[3].SumProperty());
+				try {
+					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
+					System.out.println("YOLO");
+					gm.play(1);
+					Thread.sleep(1000);
+					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
+					gm.play(2);
+					Thread.sleep(1000);
+					p3.setText("Player 1: " + gm.players[2].getHand().getSum());
+					gm.play(3);
+					Thread.sleep(1000);
+					p4.setText("Player 1: " + gm.players[3].getHand().getSum());
+					gm.checkEnd();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -133,14 +157,27 @@ public class BlackJackMain extends Application{
 				gm.players[0].addCard(gm.deck.dealCard());
 				System.out.println("The sum of player is " + gm.players[0].getHand().getSum());
 				//Gm.play() will then process through the AI's turns.
-				gm.play();
 				money.setText(Integer.toString(player.getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				p1.textProperty().bind(gm.players[0].SumProperty());
-				p2.textProperty().bind(gm.players[1].SumProperty());
-				p3.textProperty().bind(gm.players[2].SumProperty());
-				p4.textProperty().bind(gm.players[3].SumProperty());
-
+				try {
+					p1.setText("Player 1: " + gm.players[0].getHand().getSum());
+					System.out.println("YOLO");
+					gm.play(1);
+					Thread.sleep(1000);
+					p2.setText("Player 1: " + gm.players[1].getHand().getSum());
+					gm.play(2);
+					Thread.sleep(1000);
+					p3.setText("Player 1: " + gm.players[2].getHand().getSum());
+					gm.play(3);
+					Thread.sleep(1000);
+					p4.setText("Player 1: " + gm.players[3].getHand().getSum());
+					gm.checkEnd();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+//Percent concentration and molarity.
+//ThermoChem porbl
 
 			}
 		});
