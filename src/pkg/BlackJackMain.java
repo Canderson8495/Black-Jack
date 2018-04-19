@@ -32,6 +32,10 @@ public class BlackJackMain extends Application{
 	Group hand4 = new Group();
 	StackPane pane = new StackPane();
 	BorderPane playerPane = new BorderPane();
+	Label p1 = new Label();
+	Label p2 = new Label();
+	Label p3 = new Label();
+	Label p4 = new Label();
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -53,10 +57,10 @@ public class BlackJackMain extends Application{
 		Label money = new Label(Integer.toString(gm.players[0].getMoney()));
 		Label pot = new Label(gmPot);
 
-		Label p1 = new Label("Player 1: " + gm.players[0].getHand().getSum());
-		Label p2 = new Label("Player 2: " + gm.players[1].getHand().getSum());
-		Label p3 = new Label("Player 3: " + gm.players[2].getHand().getSum());
-		Label p4 = new Label("Player 4: " + gm.players[3].getHand().getSum());
+		p1.setText("Player 1: " + gm.players[0].getHand().getSum());
+		p2.setText("Player 2: " + gm.players[1].getHand().getSum());
+		p3.setText("Player 3: " + gm.players[2].getHand().getSum());
+		p4.setText("Player 4: " + gm.players[3].getHand().getSum());
 		p1.setTranslateY(100);
 		p2.setTranslateX(100);
 		p3.setTranslateY(-100);
@@ -123,6 +127,7 @@ public class BlackJackMain extends Application{
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				playAI();
+				
 
 			}
 		});
@@ -159,16 +164,33 @@ public class BlackJackMain extends Application{
 	}
 	public void playAI() {
 		try {
+			
+			pane.getChildren().remove(0);
 			hand1 = gm.players[0].getHand().getHandImage();
+			pane.getChildren().add(hand1);
+			p1.setText("Player 1: " + gm.players[0].getHand().getSum());
 			gm.play(1);
 			Thread.sleep(1000);
+			pane.getChildren().remove(0);
 			hand2 = gm.players[1].getHand().getHandImage();
+			pane.getChildren().add(hand2);
+			p2.setText("Player 2: " + gm.players[1].getHand().getSum());
 			gm.play(2);
 			Thread.sleep(1000);
+			pane.getChildren().remove(0);
 			hand3 = gm.players[2].getHand().getHandImage();
+			pane.getChildren().add(hand3);
+			p3.setText("Player 3: " + gm.players[2].getHand().getSum());
 			gm.play(3);
 			Thread.sleep(1000);
+			pane.getChildren().remove(0);
 			hand4 = gm.players[3].getHand().getHandImage();
+			pane.getChildren().add(hand4);
+			p4.setText("Player 4: " + gm.players[3].getHand().getSum());
+			hand1.setTranslateY(300);
+			hand2.setTranslateX(300);
+			hand3.setTranslateY(-300);
+			hand4.setTranslateX(-300);
 			gm.checkEnd();
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
