@@ -54,6 +54,8 @@ public class BlackJackMain extends Application{
 		Button fold = new Button("Fold");
 		Button hold = new Button("Hold");
 		Button bet = new Button("Bet");
+		Button newRound = new Button("New Round");
+		
 		Label money = new Label(Integer.toString(gm.players[0].getMoney()));
 		Label pot = new Label(gmPot);
 
@@ -80,6 +82,7 @@ public class BlackJackMain extends Application{
 		controls.getChildren().add(hit);
 		controls.getChildren().add(hold);
 		controls.getChildren().add(fold);
+		controls.getChildren().add(newRound);
 		vBox.getChildren().add(money);
 		vBox.getChildren().add(betAmount);
 		pane.getChildren().add(pot);
@@ -104,7 +107,20 @@ public class BlackJackMain extends Application{
 		
 		
 		//Button Actions
-		
+		newRound.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				gm.newRound();
+				gm.setPot(0);
+				//Gm.play() will then process through the AI's turns.
+				gm.players[0].getHand().resetHand();
+				gm.players[1].getHand().resetHand();
+				gm.players[2].getHand().resetHand();
+				gm.players[3].getHand().resetHand();
+				
+
+			}
+		});
 		bet.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -157,6 +173,7 @@ public class BlackJackMain extends Application{
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				playAI();
+				
 			}
 		});
 
@@ -165,25 +182,25 @@ public class BlackJackMain extends Application{
 	public void playAI() {
 		try {
 			
-			pane.getChildren().remove(0);
+			pane.getChildren().remove(hand1);
 			hand1 = gm.players[0].getHand().getHandImage();
 			pane.getChildren().add(hand1);
 			p1.setText("Player 1: " + gm.players[0].getHand().getSum());
 			gm.play(1);
 			Thread.sleep(1000);
-			pane.getChildren().remove(0);
+			pane.getChildren().remove(hand2);
 			hand2 = gm.players[1].getHand().getHandImage();
 			pane.getChildren().add(hand2);
 			p2.setText("Player 2: " + gm.players[1].getHand().getSum());
 			gm.play(2);
 			Thread.sleep(1000);
-			pane.getChildren().remove(0);
+			pane.getChildren().remove(hand3);
 			hand3 = gm.players[2].getHand().getHandImage();
 			pane.getChildren().add(hand3);
 			p3.setText("Player 3: " + gm.players[2].getHand().getSum());
 			gm.play(3);
 			Thread.sleep(1000);
-			pane.getChildren().remove(0);
+			pane.getChildren().remove(hand4);
 			hand4 = gm.players[3].getHand().getHandImage();
 			pane.getChildren().add(hand4);
 			p4.setText("Player 4: " + gm.players[3].getHand().getSum());
