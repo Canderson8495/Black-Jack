@@ -1,10 +1,10 @@
 package pkg;
 
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,14 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ContentDisplay;
 
-
-
-
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import java.util.*;
 
-public class BlackJackMain extends Application{
+public class BlackJackMain extends Application {
 	GameMaster gm = new GameMaster();
 	Group hand1 = new Group();
 	Group hand2 = new Group();
@@ -38,14 +36,14 @@ public class BlackJackMain extends Application{
 	Label p4 = new Label();
 	Label money = new Label(Integer.toString(gm.players[0].getMoney()));
 	Label pot = new Label("0");
+
 	@Override
 	public void start(Stage primaryStage) {
-		
+
 		gm.newRound();
 		HBox controls = new HBox();
 		VBox vBox = new VBox();
 		System.out.println(gm.deck.dealCard());
-		
 
 		controls.setSpacing(10);
 		controls.setAlignment(Pos.CENTER);
@@ -55,7 +53,6 @@ public class BlackJackMain extends Application{
 		Button hold = new Button("Hold");
 		Button bet = new Button("Bet");
 		Button newRound = new Button("New Round");
-
 
 		p1.setText("Player 1: " + gm.players[0].getHand().getSum());
 		p2.setText("Player 2: " + gm.players[1].getHand().getSum());
@@ -70,10 +67,9 @@ public class BlackJackMain extends Application{
 		hand3 = gm.players[2].getHand().getHandImage();
 		hand4 = gm.players[3].getHand().getHandImage();
 
-
 		money.setMinWidth(50);
-		
-		TextField betAmount = new TextField(); 
+
+		TextField betAmount = new TextField();
 		betAmount.setPromptText("$");
 		betAmount.setPrefColumnCount(3);
 		controls.getChildren().add(bet);
@@ -84,27 +80,32 @@ public class BlackJackMain extends Application{
 		vBox.getChildren().add(money);
 		vBox.getChildren().add(betAmount);
 		pane.getChildren().add(pot);
-		pane.getChildren().addAll(p1,p2,p3,p4,hand1,hand2,hand3,hand4);
+		pane.getChildren().addAll(p1, p2, p3, p4, hand1, hand2, hand3, hand4);
 		hand1.setTranslateY(300);
 		hand2.setTranslateX(300);
 		hand3.setTranslateY(-300);
 		hand4.setTranslateX(-300);
-		
-
 
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(pane);
 		borderPane.setBottom(controls);
 		borderPane.setRight(vBox);
 		BorderPane.setAlignment(controls, Pos.CENTER);
+
+		Scene scene = new Scene(borderPane, 1000, 800);
+		Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+
+		// set Stage boundaries to visible bounds of the main screen
+		primaryStage.setX(primaryScreenBounds.getMinX());
+		primaryStage.setY(primaryScreenBounds.getMinY());
+		primaryStage.setWidth(primaryScreenBounds.getWidth());
+		primaryStage.setHeight(primaryScreenBounds.getHeight());
 		
-		Scene scene = new Scene(borderPane, 500, 500);
 		primaryStage.setTitle("BlackJack");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
-		
-		//Button Actions
+
+		// Button Actions
 		newRound.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -114,14 +115,13 @@ public class BlackJackMain extends Application{
 				gm.players[3].getHand().resetHand();
 				gm.newRound();
 				gm.setPot(0);
-				for(int x = 0; x < gm.players.length; x++) {
+				for (int x = 0; x < gm.players.length; x++) {
 					updateHand(x);
 				}
 				hit.setDisable(false);
 				hold.setDisable(false);
 				fold.setDisable(false);
-				//Gm.play() will then process through the AI's turns.
-				
+				// Gm.play() will then process through the AI's turns.
 
 			}
 		});
@@ -132,23 +132,25 @@ public class BlackJackMain extends Application{
 				gm.runningBet = gm.getPot();
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				//Gm.play() will then process through the AI's turns.
-				
+				// Gm.play() will then process through the AI's turns.
 
 			}
 		});
 		fold.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
-				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
-				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
+
+				// Busting is essentially the same folding, you won't be considered for any
+				// financial holdings, and you want be able to participate in the following
+				// rounds.
+				// As of now NPCs do not have functionality to bet, so this button will have
+				// minimal functionality.
 				gm.players[0].setBust(true);
-				//Gm.play() will then process through the AI's turns.
+				// Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				gm.players[0].setBust(true);
-				if(gm.players[0].isBust()) {
+				if (gm.players[0].isBust()) {
 					hit.setDisable(true);
 					hold.setDisable(true);
 					fold.setDisable(true);
@@ -160,11 +162,14 @@ public class BlackJackMain extends Application{
 		hold.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
-				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
-				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
+
+				// Busting is essentially the same folding, you won't be considered for any
+				// financial holdings, and you want be able to participate in the following
+				// rounds.
+				// As of now NPCs do not have functionality to bet, so this button will have
+				// minimal functionality.
 				gm.players[0].setHold(true);
-				//Gm.play() will then process through the AI's turns.
+				// Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				hit.setDisable(true);
@@ -178,33 +183,37 @@ public class BlackJackMain extends Application{
 		hit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				
-				//Busting is essentially the same folding, you won't be considered for any financial holdings, and you want be able to participate in the following rounds.
-				//As of now NPCs do not have functionality to bet, so this button will have minimal functionality.
+
+				// Busting is essentially the same folding, you won't be considered for any
+				// financial holdings, and you want be able to participate in the following
+				// rounds.
+				// As of now NPCs do not have functionality to bet, so this button will have
+				// minimal functionality.
 				gm.players[0].addCard(gm.deck.dealCard());
 				System.out.println("The sum of player is " + gm.players[0].getHand().getSum());
-				//Gm.play() will then process through the AI's turns.
+				// Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				updateHand(0);
 				playAI();
 				gm.runningBet = 0;
-				if(gm.players[0].isBust()) {
+				if (gm.players[0].isBust()) {
 					hit.setDisable(true);
 					hold.setDisable(true);
 					fold.setDisable(true);
 					endRound();
 				}
-				
-				
+
 			}
-		});	
+		});
 	}
+
 	public void endRound() {
-		while(gm.checkEnd() == false) {
+		while (gm.checkEnd() == false) {
 			playAI();
 		}
 	}
+
 	public void playAI() {
 		try {
 			gm.play(1);
@@ -219,10 +228,11 @@ public class BlackJackMain extends Application{
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}	
+		}
 	}
+
 	public void updateHand(int player) {
-		switch(player) {
+		switch (player) {
 		case 0:
 			pane.getChildren().remove(hand1);
 			hand1 = gm.players[0].getHand().getHandImage();
@@ -236,7 +246,7 @@ public class BlackJackMain extends Application{
 			pane.getChildren().add(hand2);
 			p2.setText("Player 2: " + gm.players[1].getHand().getSum());
 			hand2.setTranslateX(300);
-			 break;
+			break;
 		case 2:
 			pane.getChildren().remove(hand3);
 			hand3 = gm.players[2].getHand().getHandImage();
@@ -258,6 +268,7 @@ public class BlackJackMain extends Application{
 		pot.setText(Integer.toString(gm.getPot()));
 		pane.getChildren().add(pot);
 	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
