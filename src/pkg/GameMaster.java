@@ -92,7 +92,7 @@ public class GameMaster {
 	public void setPot(int money) {
 		pot = money;
 	}
-	public void checkEnd() {
+	public boolean checkEnd() {
 		boolean end = true;
 		for(int x = 0; x < players.length; x++) {
 			if(players[x].isBust() || players[x].isHold()) {
@@ -103,8 +103,9 @@ public class GameMaster {
 		}
 		if(end) {
 			System.out.println("ROUND OVER!!!!!!!!!!!!!!!!!!!");
-			calculateWin();
+			System.out.println("PLAYER " + calculateWin() + " IS THE WINNER");
 		}
+		return end;
 	}
 }
 

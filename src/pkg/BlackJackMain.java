@@ -110,13 +110,19 @@ public class BlackJackMain extends Application{
 		newRound.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				gm.newRound();
-				gm.setPot(0);
-				//Gm.play() will then process through the AI's turns.
 				gm.players[0].getHand().resetHand();
 				gm.players[1].getHand().resetHand();
 				gm.players[2].getHand().resetHand();
 				gm.players[3].getHand().resetHand();
+				gm.newRound();
+				gm.setPot(0);
+				for(int x = 0; x < gm.players.length; x++) {
+					updateHand(x);
+				}
+				hit.setDisable(false);
+				hold.setDisable(false);
+				fold.setDisable(false);
+				//Gm.play() will then process through the AI's turns.
 				
 
 			}
@@ -142,7 +148,13 @@ public class BlackJackMain extends Application{
 				//Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				playAI();
+				gm.players[0].setBust(true);
+				if(gm.players[0].isBust()) {
+					hit.setDisable(true);
+					hold.setDisable(true);
+					fold.setDisable(true);
+					endRound();
+				}
 				
 
 			}
@@ -157,7 +169,10 @@ public class BlackJackMain extends Application{
 				//Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
-				playAI();
+				hit.setDisable(true);
+				hold.setDisable(true);
+				fold.setDisable(true);
+				endRound();
 
 			}
 		});
@@ -172,49 +187,72 @@ public class BlackJackMain extends Application{
 				//Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
+				updateHand(0);
 				playAI();
+				if(gm.players[0].isBust()) {
+					hit.setDisable(true);
+					hold.setDisable(true);
+					fold.setDisable(true);
+					endRound();
+				}
+				
 				
 			}
-		});
-
-		
+		});	
+	}
+	public void endRound() {
+		while(gm.checkEnd() == false) {
+			playAI();
+		}
 	}
 	public void playAI() {
 		try {
-			
-			pane.getChildren().remove(hand1);
-			hand1 = gm.players[0].getHand().getHandImage();
-			pane.getChildren().add(hand1);
-			p1.setText("Player 1: " + gm.players[0].getHand().getSum());
 			gm.play(1);
-			Thread.sleep(1000);
-			pane.getChildren().remove(hand2);
-			hand2 = gm.players[1].getHand().getHandImage();
-			pane.getChildren().add(hand2);
-			p2.setText("Player 2: " + gm.players[1].getHand().getSum());
+			updateHand(1);
+			Thread.sleep(100);
 			gm.play(2);
-			Thread.sleep(1000);
-			pane.getChildren().remove(hand3);
-			hand3 = gm.players[2].getHand().getHandImage();
-			pane.getChildren().add(hand3);
-			p3.setText("Player 3: " + gm.players[2].getHand().getSum());
+			updateHand(2);
+			Thread.sleep(100);
 			gm.play(3);
-			Thread.sleep(1000);
+			updateHand(3);
+			Thread.sleep(100);
 			pane.getChildren().remove(hand4);
-			hand4 = gm.players[3].getHand().getHandImage();
-			pane.getChildren().add(hand4);
-			p4.setText("Player 4: " + gm.players[3].getHand().getSum());
-			hand1.setTranslateY(300);
-			hand2.setTranslateX(300);
-			hand3.setTranslateY(-300);
-			hand4.setTranslateX(-300);
-			gm.checkEnd();
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}	
 	}
-	
+	public void updateHand(int player) {
+		switch(player) {
+		case 0:
+			pane.getChildren().remove(hand1);
+			hand1 = gm.players[0].getHand().getHandImage();
+			pane.getChildren().add(hand1);
+			p1.setText("Player 1: " + gm.players[0].getHand().getSum());
+			hand1.setTranslateY(300);
+			break;
+		case 1:
+			pane.getChildren().remove(hand2);
+			hand2 = gm.players[1].getHand().getHandImage();
+			pane.getChildren().add(hand2);
+			p2.setText("Player 2: " + gm.players[1].getHand().getSum());
+			hand2.setTranslateX(300);
+			 break;
+		case 2:
+			pane.getChildren().remove(hand3);
+			hand3 = gm.players[2].getHand().getHandImage();
+			pane.getChildren().add(hand3);
+			p3.setText("Player 3: " + gm.players[2].getHand().getSum());
+			hand3.setTranslateY(-300);
+			break;
+		case 3:
+			hand4 = gm.players[3].getHand().getHandImage();
+			pane.getChildren().add(hand4);
+			p4.setText("Player 4: " + gm.players[3].getHand().getSum());
+			hand4.setTranslateX(-300);
+			break;
+		}
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
