@@ -21,7 +21,7 @@ public class GameMaster {
 		this.runningBet = runningBet;
 	}
 	private int pot;
-	int runningBet;
+	int runningBet = 0;
 	public GameMaster() {
 		//This for loop initialized all players in "players" array with the no arg constructor of Player Class.
 		//The no arg constructor of Player Class intializes the player object with 1000 units of money
@@ -62,11 +62,11 @@ public class GameMaster {
 					System.out.println("Player " + x + " is holding");
 				}
 				if(runningBet > 0) {
-					players[x].bet(runningBet);
+					pot += players[x].bet(runningBet);
+					System.out.println("WERE IN BITCHES");
 				}
 			}
 		//}
-		runningBet = 0;
 	}
 	public void newRound() {
 		//Shuffles
@@ -76,13 +76,15 @@ public class GameMaster {
 			//Probable cause of bug if hand of player is not passed directly to this class for immediate adjustments like javafx.getChildren.add();
 			deck = new Deck();
 			players[x].setHand(new Hand());
-			players[x].getHand().addCard(deck.dealCard());
+			players[x].getHand().addCard(deck.dealCard(true));
 			players[x].getHand().addCard(deck.dealCard());
 			players[x].setHold(false);
 			players[x].setBust(false);
 			players[x].bet(ante);
 		}
+		players[0].getHand().getCard(0).setHidden(false);
 	}
+	
 	public int getPot() {
 		return pot;
 	}

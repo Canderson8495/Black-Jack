@@ -108,4 +108,13 @@ public class Hand {
 		}
 		return handGroup;
 	}
+	public Group getHandImage(boolean hidden) {
+		Group handGroup = new Group();
+		for(int x = 1; x < hand.size(); x++) {
+			ImageView iv = hand.get(x).getCardImage();
+			iv.setX(x*50);
+			handGroup.getChildren().add(iv);
+		}
+		return handGroup;
+	}
 }

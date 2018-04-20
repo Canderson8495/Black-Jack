@@ -6,6 +6,13 @@ import javafx.scene.image.ImageView;
 
 //This is essentially just a struct with a constructor
 public class Card {
+	private boolean hidden;
+	public boolean isHidden() {
+		return hidden;
+	}
+	public void setHidden(boolean hidden) {
+		this.hidden = hidden;
+	}
 	private int value;
 	private String suit;
 	public int getValue() {
@@ -25,10 +32,17 @@ public class Card {
 		this.suit = suit;
 		this.value = value;
 	}
+	public Card(boolean hidden) {
+		this.hidden = hidden;
+	}
 	public ImageView getCardImage() {
 		File file = new File("C:\\Code\\Java\\Black-Jack\\src\\images\\"+suit.charAt(0)+value+".png");
+		if(hidden)
+			file = new File("C:\\Code\\Java\\Black-Jack\\src\\images\\back.png");
 		Image image = new Image(file.toURI().toString());
 		ImageView iv = new ImageView(image);
+		iv.setFitHeight(250);
+		iv.setFitWidth(200);
 		return iv;
 	}
 	@Override

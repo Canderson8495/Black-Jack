@@ -50,6 +50,12 @@ public class Deck {
 		deck.remove(0);
 		return tmp;
 	}
+	public Card dealCard(boolean hidden) {
+		Card tmp = deck.get(0);
+		tmp.setHidden(true);
+		deck.remove(0);
+		return tmp;
+	}
 	
 	public void shuffle() {
 		Random rng = new Random();

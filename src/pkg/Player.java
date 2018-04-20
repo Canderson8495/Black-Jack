@@ -39,8 +39,6 @@ public class Player {
 	public void addMoney(int money) {
 		this.money += money;
 	}
-	
-	
 	//ToDo add logic for a NPC betting and using hit feature.
 	
 	
@@ -63,7 +61,6 @@ public class Player {
 	public void setHand(Hand hand) {
 		this.hand = hand;
 	}
-	
 	public void addCard(Card card) {
 		hand.addCard(card);
 		System.out.println("WE GOT A CARD");

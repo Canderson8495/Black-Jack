@@ -36,14 +36,14 @@ public class BlackJackMain extends Application{
 	Label p2 = new Label();
 	Label p3 = new Label();
 	Label p4 = new Label();
-	
+	Label money = new Label(Integer.toString(gm.players[0].getMoney()));
+	Label pot = new Label("0");
 	@Override
 	public void start(Stage primaryStage) {
 		
 		gm.newRound();
 		HBox controls = new HBox();
 		VBox vBox = new VBox();
-		String gmPot = Integer.toString(gm.getPot());
 		System.out.println(gm.deck.dealCard());
 		
 
@@ -55,9 +55,7 @@ public class BlackJackMain extends Application{
 		Button hold = new Button("Hold");
 		Button bet = new Button("Bet");
 		Button newRound = new Button("New Round");
-		
-		Label money = new Label(Integer.toString(gm.players[0].getMoney()));
-		Label pot = new Label(gmPot);
+
 
 		p1.setText("Player 1: " + gm.players[0].getHand().getSum());
 		p2.setText("Player 2: " + gm.players[1].getHand().getSum());
@@ -131,10 +129,11 @@ public class BlackJackMain extends Application{
 			@Override
 			public void handle(ActionEvent e) {
 				gm.addPot(gm.players[0].bet(Integer.parseInt(betAmount.getText())));
+				gm.runningBet = gm.getPot();
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
 				//Gm.play() will then process through the AI's turns.
-
+				
 
 			}
 		});
@@ -155,8 +154,7 @@ public class BlackJackMain extends Application{
 					fold.setDisable(true);
 					endRound();
 				}
-				
-
+				gm.runningBet = 0;
 			}
 		});
 		hold.setOnAction(new EventHandler<ActionEvent>() {
@@ -172,6 +170,7 @@ public class BlackJackMain extends Application{
 				hit.setDisable(true);
 				hold.setDisable(true);
 				fold.setDisable(true);
+				gm.runningBet = 0;
 				endRound();
 
 			}
@@ -189,6 +188,7 @@ public class BlackJackMain extends Application{
 				pot.setText(Integer.toString(gm.getPot()));
 				updateHand(0);
 				playAI();
+				gm.runningBet = 0;
 				if(gm.players[0].isBust()) {
 					hit.setDisable(true);
 					hold.setDisable(true);
@@ -216,7 +216,6 @@ public class BlackJackMain extends Application{
 			gm.play(3);
 			updateHand(3);
 			Thread.sleep(100);
-			pane.getChildren().remove(hand4);
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -246,12 +245,18 @@ public class BlackJackMain extends Application{
 			hand3.setTranslateY(-300);
 			break;
 		case 3:
+			pane.getChildren().remove(hand4);
 			hand4 = gm.players[3].getHand().getHandImage();
 			pane.getChildren().add(hand4);
 			p4.setText("Player 4: " + gm.players[3].getHand().getSum());
 			hand4.setTranslateX(-300);
 			break;
 		}
+		money.setText(Integer.toString(gm.players[0].getMoney()));
+		System.out.println("Are we here");
+		pane.getChildren().remove(pot);
+		pot.setText(Integer.toString(gm.getPot()));
+		pane.getChildren().add(pot);
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
