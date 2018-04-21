@@ -36,14 +36,13 @@ public class BlackJackMain extends Application {
 	Label p4 = new Label();
 	Label money = new Label(Integer.toString(gm.players[0].getMoney()));
 	Label pot = new Label("0");
-
+	Label winner = new Label("Player " + Integer.toString(gm.winner()) + " is the winner");
 	@Override
 	public void start(Stage primaryStage) {
 
 		gm.newRound();
 		HBox controls = new HBox();
 		VBox vBox = new VBox();
-		System.out.println(gm.deck.dealCard());
 
 		controls.setSpacing(10);
 		controls.setAlignment(Pos.CENTER);
@@ -54,10 +53,10 @@ public class BlackJackMain extends Application {
 		Button bet = new Button("Bet");
 		Button newRound = new Button("New Round");
 
-		p1.setText("Player 1: " + gm.players[0].getHand().getSum());
-		p2.setText("Player 2: " + gm.players[1].getHand().getSum());
-		p3.setText("Player 3: " + gm.players[2].getHand().getSum());
-		p4.setText("Player 4: " + gm.players[3].getHand().getSum());
+		p1.setText("Player 1: " + gm.players[0].getMoney());
+		p2.setText("Player 2: " + gm.players[1].getMoney());
+		p3.setText("Player 3: " + gm.players[2].getMoney());
+		p4.setText("Player 4: " + gm.players[3].getMoney());
 		p1.setTranslateY(100);
 		p2.setTranslateX(100);
 		p3.setTranslateY(-100);
@@ -109,6 +108,7 @@ public class BlackJackMain extends Application {
 		newRound.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				pane.getChildren().remove(winner);
 				gm.players[0].getHand().resetHand();
 				gm.players[1].getHand().resetHand();
 				gm.players[2].getHand().resetHand();
@@ -155,6 +155,10 @@ public class BlackJackMain extends Application {
 					hold.setDisable(true);
 					fold.setDisable(true);
 					endRound();
+					winner.setText("Player " + Integer.toString(gm.winner()) + " is the winner");
+					pane.getChildren().remove(pot);
+					pane.getChildren().add(winner);
+					
 				}
 				gm.runningBet = 0;
 			}
@@ -177,6 +181,9 @@ public class BlackJackMain extends Application {
 				fold.setDisable(true);
 				gm.runningBet = 0;
 				endRound();
+				winner.setText("Player " + Integer.toString(gm.winner()) + " is the winner");
+				pane.getChildren().remove(pot);
+				pane.getChildren().add(winner);
 
 			}
 		});
@@ -190,7 +197,6 @@ public class BlackJackMain extends Application {
 				// As of now NPCs do not have functionality to bet, so this button will have
 				// minimal functionality.
 				gm.players[0].addCard(gm.deck.dealCard());
-				System.out.println("The sum of player is " + gm.players[0].getHand().getSum());
 				// Gm.play() will then process through the AI's turns.
 				money.setText(Integer.toString(gm.players[0].getMoney()));
 				pot.setText(Integer.toString(gm.getPot()));
@@ -201,7 +207,11 @@ public class BlackJackMain extends Application {
 					hit.setDisable(true);
 					hold.setDisable(true);
 					fold.setDisable(true);
-					endRound();
+					endRound();	
+					winner.setText("Player " + Integer.toString(gm.winner()) + " is the winner");
+					pane.getChildren().remove(pot);
+					pane.getChildren().add(winner);
+
 				}
 
 			}
@@ -237,33 +247,32 @@ public class BlackJackMain extends Application {
 			pane.getChildren().remove(hand1);
 			hand1 = gm.players[0].getHand().getHandImage();
 			pane.getChildren().add(hand1);
-			p1.setText("Player 1: " + gm.players[0].getHand().getSum());
+			p1.setText("Player 1: " + gm.players[0].getMoney());
 			hand1.setTranslateY(300);
 			break;
 		case 1:
 			pane.getChildren().remove(hand2);
 			hand2 = gm.players[1].getHand().getHandImage();
 			pane.getChildren().add(hand2);
-			p2.setText("Player 2: " + gm.players[1].getHand().getSum());
+			p2.setText("Player 2: " + gm.players[1].getMoney());
 			hand2.setTranslateX(300);
 			break;
 		case 2:
 			pane.getChildren().remove(hand3);
 			hand3 = gm.players[2].getHand().getHandImage();
 			pane.getChildren().add(hand3);
-			p3.setText("Player 3: " + gm.players[2].getHand().getSum());
+			p3.setText("Player 3: " + gm.players[2].getMoney());
 			hand3.setTranslateY(-300);
 			break;
 		case 3:
 			pane.getChildren().remove(hand4);
 			hand4 = gm.players[3].getHand().getHandImage();
 			pane.getChildren().add(hand4);
-			p4.setText("Player 4: " + gm.players[3].getHand().getSum());
+			p4.setText("Player 4: " + gm.players[3].getMoney());
 			hand4.setTranslateX(-300);
 			break;
 		}
 		money.setText(Integer.toString(gm.players[0].getMoney()));
-		System.out.println("Are we here");
 		pane.getChildren().remove(pot);
 		pot.setText(Integer.toString(gm.getPot()));
 		pane.getChildren().add(pot);

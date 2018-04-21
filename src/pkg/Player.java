@@ -63,7 +63,6 @@ public class Player {
 	}
 	public void addCard(Card card) {
 		hand.addCard(card);
-		System.out.println("WE GOT A CARD");
 		if(hand.getSum()> 21) {
 			System.out.println("Bust");
 			bust = true;

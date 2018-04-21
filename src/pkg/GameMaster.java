@@ -44,29 +44,36 @@ public class GameMaster {
 		//resetting pot;
 		pot = 0;
 		newRound();
-		System.out.println(currentWinner);
 		return currentWinner;
 	}
 	public void play(int x) {
 		Random rng = new Random();
 		//for(int x = 1; x < players.length;x++) {
-			System.out.println("Player " + x + " " +players[x].getHand().getSum());
 			if(players[x].isHold() || players[x].isBust()) {
 			}else {
 				if(players[x].getHand().getSum()<17 && rng.nextInt()%5!=0) {
 					players[x].addCard(deck.dealCard());
-					System.out.println("Dealing player " + x);
 					
 				}else {
 					players[x].setHold(true);
-					System.out.println("Player " + x + " is holding");
 				}
 				if(runningBet > 0) {
 					pot += players[x].bet(runningBet);
-					System.out.println("WERE IN BITCHES");
 				}
 			}
 		//}
+	}
+	public int winner() {
+		int winner = -1;
+		int max = 0;
+		for(int x = 0; x < players.length; x++) {
+			if(players[x].isBust() == false && players[x].getHand().getSum() > max) {
+				max = players[x].getHand().getSum();
+				winner = x;
+			}
+		}
+	
+		return winner;
 	}
 	public void newRound() {
 		//Shuffles
@@ -105,7 +112,7 @@ public class GameMaster {
 		}
 		if(end) {
 			System.out.println("ROUND OVER!!!!!!!!!!!!!!!!!!!");
-			System.out.println("PLAYER " + calculateWin() + " IS THE WINNER");
+			System.out.println("PLAYER " + winner() + " IS THE WINNER");
 		}
 		return end;
 	}
