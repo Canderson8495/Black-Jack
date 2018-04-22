@@ -36,7 +36,7 @@ public class BlackJackMain extends Application {
 	Label p4 = new Label();
 	Label money = new Label(Integer.toString(gm.players[0].getMoney()));
 	Label pot = new Label("0");
-	Label winner = new Label("Player " + Integer.toString(gm.winner()) + " is the winner");
+	Label winner = new Label("Player " + Integer.toString(gm.winner()+1) + " is the winner");
 	@Override
 	public void start(Stage primaryStage) {
 
@@ -155,9 +155,10 @@ public class BlackJackMain extends Application {
 					hold.setDisable(true);
 					fold.setDisable(true);
 					endRound();
-					winner.setText("Player " + Integer.toString(gm.winner()) + " is the winner");
+					winner.setText("Player " + Integer.toString(gm.winner()+1) + " is the winner");
 					pane.getChildren().remove(pot);
 					pane.getChildren().add(winner);
+					winner.setTranslateY(-50);
 					
 				}
 				gm.runningBet = 0;
@@ -181,9 +182,10 @@ public class BlackJackMain extends Application {
 				fold.setDisable(true);
 				gm.runningBet = 0;
 				endRound();
-				winner.setText("Player " + Integer.toString(gm.winner()) + " is the winner");
+				winner.setText("Player " + Integer.toString(gm.winner()+1) + " is the winner");
 				pane.getChildren().remove(pot);
 				pane.getChildren().add(winner);
+				winner.setTranslateY(-50);
 
 			}
 		});
@@ -208,9 +210,10 @@ public class BlackJackMain extends Application {
 					hold.setDisable(true);
 					fold.setDisable(true);
 					endRound();	
-					winner.setText("Player " + Integer.toString(gm.winner()) + " is the winner");
+					winner.setText("Player " + (Integer.toString(gm.winner())+1) + " is the winner");
 					pane.getChildren().remove(pot);
 					pane.getChildren().add(winner);
+					winner.setTranslateY(-50);
 
 				}
 

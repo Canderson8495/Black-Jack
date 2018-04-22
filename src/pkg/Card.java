@@ -36,9 +36,9 @@ public class Card {
 		this.hidden = hidden;
 	}
 	public ImageView getCardImage() {
-		File file = new File("C:\\Users\\PC\\Documents\\GitHub\\Black-Jack\\src\\images\\"+suit.charAt(0)+value+".png");
+		File file = new File("src\\images\\"+suit.charAt(0)+value+".png");
 		if(hidden)
-			file = new File("C:\\Users\\PC\\Documents\\GitHub\\Black-Jack\\src\\images\\back.png");
+			file = new File("src\\images\\back.png");
 		Image image = new Image(file.toURI().toString());
 		ImageView iv = new ImageView(image);
 		iv.setFitHeight(250);
