@@ -210,7 +210,7 @@ public class BlackJackMain extends Application {
 					hold.setDisable(true);
 					fold.setDisable(true);
 					endRound();	
-					winner.setText("Player " + (Integer.toString(gm.winner())+1) + " is the winner");
+					winner.setText("Player " + (Integer.toString(gm.winner()+1)) + " is the winner");
 					pane.getChildren().remove(pot);
 					pane.getChildren().add(winner);
 					winner.setTranslateY(-50);
