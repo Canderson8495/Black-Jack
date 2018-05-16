@@ -40,9 +40,11 @@ public class GameMaster {
 			}
 		}
 		//Giving pot to Winner
-		players[currentWinner].addMoney(pot);
+		if(currentWinner != -1) {
+			players[currentWinner].addMoney(pot);
+			pot = 0;
+		}
 		//resetting pot;
-		pot = 0;
 		newRound();
 		return currentWinner;
 	}
